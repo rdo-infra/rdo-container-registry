@@ -1,0 +1,7 @@
+*.pyc
+*.egg
+*.eggs
+*.egg-info
+.tox/
+doc/build
+openshift-ansible/
