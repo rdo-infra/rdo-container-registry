@@ -1,0 +1,12 @@
+# Create an OSEv3 group that contains the masters and nodes groups
+[OSEv3:children]
+masters
+nodes
+
+# host group for masters
+[masters]
+registry.rdoproject.org
+
+# host group for nodes, includes region info
+[nodes]
+registry.rdoproject.org openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_schedulable=true
