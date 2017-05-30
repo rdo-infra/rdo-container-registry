@@ -1,0 +1,54 @@
+---
+debug_level: 2
+
+# This is deployed on an OpenStack cloud which defaults eth0 mtu to 1450
+# The node mtu must be 50 less than eth0
+# https://docs.openshift.com/container-platform/3.5/admin_guide/sdn_troubleshooting.html#builds-on-a-virtual-network-are-failing
+openshift_node_sdn_mtu: 1400
+
+# Version and deployment type
+openshift_deployment_type: origin
+deployment_subtype: registry
+# openshift_release 1.5.1 is only available in -testing and fixes known issues
+openshift_repos_enable_testing: true
+openshift_release: v1.5.1
+
+# Identity: GitHub oauth
+# Application name: "OpenShift Docker Registry Console"
+# Application home page: "https://registry.rdoproject.org:8443/"
+# Application description: "OpenShift Docker Registry Console"
+# Application callback URL: "https://registry.rdoproject.org:8443/oauth2callback/github"
+openshift_master_identity_providers:
+  - name: github
+    login: true
+    challenge: false
+    kind: GitHubIdentityProvider
+    clientID: "{{ lookup('env', 'RDO_GITHUB_CLIENT_ID') |default(None, true) }}"
+    clientSecret: "{{ lookup('env', 'RDO_GITHUB_CLIENT_SECRET') |default(None, true) }}"
+    teams:
+      - rdo-infra/registry-rdoproject-org
+
+# Endpoint DNS and SSL
+openshift_master_cluster_public_hostname: registry.rdoproject.org
+openshift_master_default_subdomain: apps.registry.rdoproject.org
+openshift_master_overwrite_named_certificates: true
+openshift_master_named_certificates:
+  - certfile: /etc/letsencrypt/live/registry.rdoproject.org/registry.rdoproject.org-fullchain.pem
+    keyfile: /etc/letsencrypt/live/registry.rdoproject.org/registry.rdoproject.org-privkey.pem
+    names:
+      - registry.rdoproject.org
+
+# Note: using passthrough termination because reencrypt does not work
+# https://github.com/openshift/origin/issues/14249
+openshift_hosted_registry_routehost: trunk.registry.rdoproject.org
+openshift_hosted_registry_routetermination: passthrough
+openshift_hosted_registry_routecertificates:
+  certfile: "/etc/letsencrypt/live/trunk.registry.rdoproject.org/trunk.registry.rdoproject.org-fullchain.pem"
+  keyfile: "/etc/letsencrypt/live/trunk.registry.rdoproject.org/trunk.registry.rdoproject.org-privkey.pem"
+
+openshift_hosted_registry_console_routehost: console.registry.rdoproject.org
+openshift_hosted_registry_console_routetermination: reencrypt
+openshift_hosted_registry_console_routecertificates:
+  certfile: "/etc/letsencrypt/live/console.registry.rdoproject.org/console.registry.rdoproject.org-cert.pem"
+  keyfile: "/etc/letsencrypt/live/console.registry.rdoproject.org/console.registry.rdoproject.org-privkey.pem"
+  cafile: "/etc/letsencrypt/live/console.registry.rdoproject.org/console.registry.rdoproject.org-chain.pem"
