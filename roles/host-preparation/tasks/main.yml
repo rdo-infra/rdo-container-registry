@@ -1,0 +1,120 @@
+---
+#   Copyright Red Hat, Inc. All Rights Reserved.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License"); you may
+#   not use this file except in compliance with the License. You may obtain
+#   a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#   License for the specific language governing permissions and limitations
+#   under the License.
+#
+
+- name: Intall pre-required packages
+  package:
+    name: "{{ host_preparation_packages }}"
+    state: "present"
+
+- name: Enable and start NetworkManager
+  service:
+    name: "NetworkManager"
+    state: "started"
+    enabled: "yes"
+
+- name: Ensure hostnames properly resolve to localhost
+  lineinfile:
+    dest: "/etc/hosts"
+    line: "127.0.0.1 {{ item }}"
+    insertafter: EOF
+  with_items:
+    - "{{ host_preparation_domain }}"
+    - "{{ host_preparation_registry }}"
+    - "{{ host_preparation_console }}"
+    - "{{ ansible_fqdn }}"
+
+- name: Configure Docker insecure registry for internal OpenShift subnet
+  lineinfile:
+    dest: "/etc/sysconfig/docker"
+    regexp: "^INSECURE_REGISTRY="
+    line: "INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'"
+  notify:
+    - Restart docker
+
+- name: Configure Docker MTU
+  lineinfile:
+    dest: "/etc/sysconfig/docker-network"
+    regexp: "^DOCKER_NETWORK_OPTIONS="
+    line: "DOCKER_NETWORK_OPTIONS='--mtu {{ host_preparation_docker_mtu }}'"
+  notify:
+    - Restart docker
+
+- name: Configure mounts fact
+  set_fact:
+    mounts: "{{ ansible_mounts | map(attribute='mount') | join(' ') }}"
+
+- name: Configure docker-storage-setup with a block device
+  copy:
+    content: |
+      DEVS={{ host_preparation_docker_disk }}
+      VG=docker-vg
+      STORAGE_DRIVER=overlay2
+      DOCKER_ROOT_VOLUME=yes
+      DOCKER_ROOT_VOLUME_SIZE=100%FREE
+    dest: "/etc/sysconfig/docker-storage-setup"
+  when:
+    - host_preparation_docker_disk is defined
+    - "'/var/lib/docker' not in mounts"
+
+- when:
+    - host_preparation_docker_disk is not defined
+    - "'/var/lib/docker' not in mounts"
+  block:
+    - name: Warn about using loopback device
+      debug:
+        msg: >-
+          'host_preparation_docker_disk' was not defined, a temporary loopback
+          device will be configured for test purposes. This is not recommended
+          in production.
+
+    - name: Pause for warning
+      pause:
+        seconds: 10
+
+    - name: Create file for loopback device
+      command: dd if=/dev/zero of=/tmp/loopback bs=1M count=4096
+
+    - name: Set up loopback device
+      command: losetup -f /tmp/loopback
+
+    - name: Create docker-vg volume group on the loopback device
+      lvg:
+        vg: "docker-vg"
+        pvs: "/dev/loop0"
+
+    - name: Configure docker-storage-setup with a loopback device
+      copy:
+        content: |
+          VG=docker-vg
+          STORAGE_DRIVER=overlay2
+          DOCKER_ROOT_VOLUME=yes
+          DOCKER_ROOT_VOLUME_SIZE=100%FREE
+        dest: "/etc/sysconfig/docker-storage-setup"
+
+- name: Run docker-storage-setup
+  command: docker-storage-setup
+  when: "'/var/lib/docker' not in mounts"
+  notify:
+    - Restart docker
+
+- name: Enable and start Docker
+  service:
+    name: "docker"
+    state: "started"
+    enabled: "yes"
+
+- name: Flush handlers
+  meta: flush_handlers
