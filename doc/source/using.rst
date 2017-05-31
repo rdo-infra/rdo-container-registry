@@ -3,8 +3,8 @@ Using the registry
 
 .. warning:: Fleshing out this documentation is a work in progress.
 
-Pulling containers
-------------------
+Pulling container images
+------------------------
 
 ``docker pull trunk.registry.rdoproject.org/<namespace>/<container>(:<tag>)``
 
@@ -13,8 +13,8 @@ Examples::
   docker pull trunk.registry.rdoproject.org/tripleo/centos-binary-base:latest-passed-ci
   docker pull trunk.registry.rdoproject.org/developer/centos
 
-Pushing containers
-------------------
+Pushing container images
+------------------------
 
 Before you can push containers, you need to log in to the registry using
 the ``docker login`` command.
@@ -40,11 +40,37 @@ privileges, for example::
 .. _registry console: https://console.registry.rdoproject.org
 .. _GitHub team: https://github.com/orgs/rdo-infra/teams/registry-rdoproject-org
 
-Using the OpenShift origin client
+Tagging container images
+------------------------
+
+With docker
+~~~~~~~~~~~
+
+When tagging images directly with Docker, keep in mind that your image names
+must contain the registry you'll be pushing to as well as the namespace or
+project::
+
+    docker pull docker.io/centos:latest
+    docker tag docker.io/centos:latest trunk.registry.rdoproject.org/tripleo/centos:anothertag
+    docker push trunk.registry.rdoproject.org/tripleo/centos:anothertag
+
+With the OpenShift Origin client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the image is already in the registry and you just want to tag the image
+with a different tag, you can do it directly with the OpenShift Origin client
+without pulling and pushing the image::
+
+    oc tag tripleo/centos-binary-base:latest tripleo/centos-binary-base:anothertag
+
+.. tip:: If you aren't familiar with the OpenShift Origin client, the next
+         section explains how you can get started.
+
+Using the OpenShift Origin client
 ---------------------------------
 
-The OpenShift origin client allows you to query the registry to list images or
-get image metadata information.
+The OpenShift Origin client allows you to query the registry to list images,
+get image metadata information or do operations on images.
 
 To install the OpenShift client::
 
@@ -94,8 +120,8 @@ the following::
 You will then be able to use ``oc`` commands against projects that are made
 public or anonymous.
 
-Listing containers
-~~~~~~~~~~~~~~~~~~
+Listing container images
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The OpenShift client has the ability to list available container images in a
 project over CLI::
@@ -111,8 +137,8 @@ project over CLI::
           future version of OpenShift, in the meantime, you can substitute that
           URL by ``trunk.registry.rdoproject.org``.
 
-Image metadata
---------------
+Container image metadata
+------------------------
 
 With the OpenShift client
 ~~~~~~~~~~~~~~~~~~~~~~~~~
