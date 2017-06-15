@@ -9,8 +9,6 @@ openshift_node_sdn_mtu: 1400
 # Version and deployment type
 openshift_deployment_type: origin
 deployment_subtype: registry
-# openshift_release 1.5.1 is only available in -testing and fixes known issues
-openshift_repos_enable_testing: true
 openshift_release: v1.5.1
 
 # Identity: GitHub oauth
