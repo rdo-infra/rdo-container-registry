@@ -27,3 +27,7 @@ Managing the registry
     # Allow authenticated users to browse the TripleO project
     # Note: https://github.com/cockpit-project/cockpit/issues/6711
     oc policy add-role-to-group registry-viewer system:authenticated -n tripleo
+
+    # Allow unauthenticated users to pull images from the TripleO project
+    # (Anonymous, public access to registry, not the actual console)
+    oc policy add-role-to-group registry-viewer system:unauthenticated -n tripleo

@@ -28,3 +28,5 @@ Troubleshooting the registry
     oc get pods -n default
     oc exec -n default <pod name> <command> (ex: oc exec -n default docker-registry-1-xgxqb ls)
 
+    # Look at policies and permissions for a project
+    oc get rolebindings -n project
