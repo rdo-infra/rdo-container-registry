@@ -295,6 +295,13 @@ the image first::
 With curl
 ~~~~~~~~~
 
+.. note:: The following examples are querying the OpenShift API directly, not
+          the docker-registry server.
+          For more information about OpenShift API endpoints and how you can
+          use them, you can refer to the official OpenShift documentation_.
+
+.. _documentation: https://docs.openshift.com/container-platform/3.5/rest_api/openshift_v1.html
+
 For ``imagestreams``::
 
     curl https://registry.rdoproject.org:8443/oapi/v1/namespaces/tripleo/imagestreams/centos-binary-aodh-api
