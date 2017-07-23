@@ -44,6 +44,14 @@
   notify:
     - Restart docker
 
+- name: Remove --selinux-enabled from /etc/sysconfig/docker for overlay2
+  lineinfile:
+    dest: "/etc/sysconfig/docker"
+    regexp: "^OPTIONS="
+    line: "OPTIONS='--log-driver=journald --signature-verification=false'"
+  notify:
+    - Restart docker
+
 - name: Configure Docker MTU
   lineinfile:
     dest: "/etc/sysconfig/docker-network"
