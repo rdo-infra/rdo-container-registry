@@ -36,14 +36,6 @@
     - "{{ host_preparation_console }}"
     - "{{ ansible_fqdn }}"
 
-- name: Configure Docker insecure registry for internal OpenShift subnet
-  lineinfile:
-    dest: "/etc/sysconfig/docker"
-    regexp: "^INSECURE_REGISTRY="
-    line: "INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'"
-  notify:
-    - Restart docker
-
 - name: Configure Docker MTU
   lineinfile:
     dest: "/etc/sysconfig/docker-network"
