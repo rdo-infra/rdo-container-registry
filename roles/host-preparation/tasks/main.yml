@@ -14,6 +14,14 @@
 #   under the License.
 #
 
+# https://github.com/openshift/openshift-ansible/issues/5812
+# Glean configures "NM_CONTROLLED=no" in the ifcfg-eth0 file
+- name: Ensure eth0 can be managed through NetworkManager
+  replace:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth0
+    regexp: "^(NM_CONTROLLED=no)$"
+    replace: "# \1 # https://github.com/openshift/openshift-ansible/issues/5812"
+
 - name: Intall pre-required packages
   package:
     name: "{{ host_preparation_packages }}"
