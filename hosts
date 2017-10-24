@@ -2,9 +2,14 @@
 [OSEv3:children]
 masters
 nodes
+etcd
 
 # host group for masters
 [masters]
+registry.rdoproject.org
+
+# host group for etcd nodes
+[etcd]
 registry.rdoproject.org
 
 # host group for nodes, includes region info
