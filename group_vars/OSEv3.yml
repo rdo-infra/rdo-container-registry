@@ -12,7 +12,20 @@ openshift_node_sdn_mtu: 1400
 # Version and deployment type
 openshift_deployment_type: origin
 deployment_subtype: registry
-openshift_release: v1.5.1
+openshift_release: v3.7
+openshift_image_tag: v3.7.0-rc.0
+openshift_repos_enable_testing: true
+
+# OpenShift persistent registry over NFS (localhost, we're not doing HA)
+openshift_hosted_registry_storage_kind: nfs
+openshift_hosted_registry_storage_access_modes:
+  - "ReadWriteMany"
+openshift_hosted_registry_storage_host: 127.0.0.1
+openshift_hosted_registry_storage_nfs_directory: /exports
+openshift_hosted_registry_storage_nfs_options: "*(rw,root_squash)"
+openshift_hosted_registry_storage_volume_name: registry
+openshift_hosted_registry_storage_volume_size: 8Gi
+openshift_hosted_registry_replicas: 1
 
 # Identity: GitHub oauth
 # Application name: "OpenShift Docker Registry Console"
