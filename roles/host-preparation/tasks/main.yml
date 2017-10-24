@@ -19,12 +19,6 @@
     name: "{{ host_preparation_packages }}"
     state: "present"
 
-- name: Enable and start NetworkManager
-  service:
-    name: "NetworkManager"
-    state: "started"
-    enabled: "yes"
-
 - name: Ensure hostnames properly resolve to localhost
   lineinfile:
     dest: "/etc/hosts"
