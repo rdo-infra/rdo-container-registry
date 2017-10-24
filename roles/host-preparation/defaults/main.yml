@@ -19,7 +19,6 @@ host_preparation_registry: trunk.registry.rdoproject.org
 host_preparation_console: console.registry.rdoproject.org
 
 host_preparation_packages:
-  - centos-release-openshift-origin
   - wget
   - git
   - net-tools
@@ -28,7 +27,6 @@ host_preparation_packages:
   - bridge-utils
   - bash-completion
   - docker
-  - NetworkManager
   - pyOpenSSL
 
 # OpenStack (TripleO) clouds have a default MTU of 1450, we need to override
