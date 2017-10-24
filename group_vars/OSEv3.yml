@@ -12,7 +12,29 @@ openshift_node_sdn_mtu: 1400
 # Version and deployment type
 openshift_deployment_type: origin
 deployment_subtype: registry
-openshift_release: v1.5.1
+openshift_release: v3.7
+openshift_image_tag: v3.7.0-rc.0
+openshift_repos_enable_testing: true
+
+# OpenShift persistent registry volume and claim on local filesystem
+openshift_hosted_registry_volumes:
+  - registry-volume
+
+openshift_hosted_registry_persistent_volumes:
+- name: registry-volume
+  capacity: 50Gi
+  access_modes:
+    - ReadWriteMany
+  storage:
+    hostPath:
+      path: /openshift_volumes/registry
+    persistentVolumeReclaimPolicy: Retain
+
+openshift_hosted_registry_persistent_volume_claims:
+- name: registry-claim
+  capacity: 50Gi
+  access_modes:
+    - ReadWriteMany
 
 # Identity: GitHub oauth
 # Application name: "OpenShift Docker Registry Console"
@@ -42,10 +64,11 @@ openshift_master_named_certificates:
 # Note: using passthrough termination because reencrypt does not work
 # https://github.com/openshift/origin/issues/14249
 openshift_hosted_registry_routehost: trunk.registry.rdoproject.org
-openshift_hosted_registry_routetermination: passthrough
+openshift_hosted_registry_routetermination: reencrypt
 openshift_hosted_registry_routecertificates:
-  certfile: "/etc/letsencrypt/live/trunk.registry.rdoproject.org/trunk.registry.rdoproject.org-fullchain.pem"
+  certfile: "/etc/letsencrypt/live/trunk.registry.rdoproject.org/trunk.registry.rdoproject.org-cert.pem"
   keyfile: "/etc/letsencrypt/live/trunk.registry.rdoproject.org/trunk.registry.rdoproject.org-privkey.pem"
+  cafile: "/etc/letsencrypt/live/trunk.registry.rdoproject.org/trunk.registry.rdoproject.org-chain.pem"
 
 openshift_hosted_registry_console_routehost: console.registry.rdoproject.org
 openshift_hosted_registry_console_routetermination: reencrypt

@@ -19,12 +19,6 @@
     name: "{{ host_preparation_packages }}"
     state: "present"
 
-- name: Enable and start NetworkManager
-  service:
-    name: "NetworkManager"
-    state: "started"
-    enabled: "yes"
-
 - name: Ensure hostnames properly resolve to localhost
   lineinfile:
     dest: "/etc/hosts"
@@ -123,6 +117,11 @@
     name: "docker"
     state: "started"
     enabled: "yes"
+
+- name: Ensure the persistent volume path exists
+  file:
+    path: "{{ openshift_hosted_registry_persistent_volumes[0]['storage']['hostPath']['path'] | dirname }}"
+    state: directory
 
 - name: Flush handlers
   meta: flush_handlers

@@ -63,19 +63,27 @@ Export oauth application credentials for github authentication::
     export RDO_GITHUB_CLIENT_ID=oauth_client_id
     export RDO_GITHUB_CLIENT_SECRET=oauth_client_secret
 
-Retrieve and run rdo-container-registry and openshift-ansible playbooks::
-
-    git clone https://github.com/rdo-infra/rdo-container-registry
-    cd rdo-container-registry
-    tox -e ansible-playbook -- -i hosts -e "host_preparation_docker_disk=/dev/vdb" host-preparation.yml
-    tox -e ansible-playbook -- -i hosts openshift-ansible/playbooks/byo/config.yml -e "ansible_ssh_user=${USER}"
-
 .. note:: /var/lib/docker will be set up on a separate block device with
           docker-storage-setup. If you do not provide the
           ``host_preparation_docker_disk`` variable for the host-preparation
           playbook, a loopback device will be generated with test purposes and
           the playbook will warn you about it.
 
+.. note:: The server stores an OpenShift persistent volume for the Docker
+          registry on the local filesystem in ``/openshift_volumes``.
+          If you expect a high volume of data, you should re-mount this
+          directory on a large partition or volume prior to installation.
+
 .. note:: ansible_ssh_user **MUST** be provided for the openshift-ansible
           playbook, it is required by tasks such as
           ``openshift_master_certificates : Lookup default group for ansible_ssh_user``.
+
+Retrieve and run rdo-container-registry and openshift-ansible playbooks::
+
+    git clone https://github.com/rdo-infra/rdo-container-registry
+    cd rdo-container-registry
+    tox -e ansible-playbook -- -i hosts -e "host_preparation_docker_disk=/dev/vdb" host-preparation.yml
+    # Note: https://github.com/openshift/openshift-ansible/issues/5812
+    #       Glean configures "NM_CONTROLLED=no" in the ifcfg-eth0 file
+    tox -e ansible-playbook -- -i hosts openshift-ansible/playbooks/byo/openshift-node/network_manager.yml -e "ansible_ssh_user=${USER}"
+    tox -e ansible-playbook -- -i hosts openshift-ansible/playbooks/byo/config.yml -e "ansible_ssh_user=${USER}"
