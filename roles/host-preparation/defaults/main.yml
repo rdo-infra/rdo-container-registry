@@ -14,10 +14,6 @@
 #   under the License.
 #
 
-host_preparation_domain: registry.rdoproject.org
-host_preparation_registry: trunk.registry.rdoproject.org
-host_preparation_console: console.registry.rdoproject.org
-
 host_preparation_packages:
   - wget
   - git
@@ -28,10 +24,6 @@ host_preparation_packages:
   - bash-completion
   - docker
   - pyOpenSSL
-
-# OpenStack (TripleO) clouds have a default MTU of 1450, we need to override
-# the 1500 default
-host_preparation_docker_mtu: 1400
 
 # It is expected that the host has an additional cinder volume/disk for the
 # storage of containers and images.
