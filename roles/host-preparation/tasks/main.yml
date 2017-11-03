@@ -25,16 +25,16 @@
     line: "127.0.0.1 {{ item }}"
     insertafter: EOF
   with_items:
-    - "{{ host_preparation_domain }}"
-    - "{{ host_preparation_registry }}"
-    - "{{ host_preparation_console }}"
+    - "{{ openshift_master_cluster_public_hostname }}"
+    - "{{ openshift_hosted_registry_routehost }}"
+    - "{{ openshift_hosted_registry_console_routehost }}"
     - "{{ ansible_fqdn }}"
 
 - name: Configure Docker insecure registry for internal OpenShift subnet
   lineinfile:
     dest: "/etc/sysconfig/docker"
     regexp: "^INSECURE_REGISTRY="
-    line: "INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'"
+    line: "INSECURE_REGISTRY='--insecure-registry {{ openshift_docker_insecure_registries }}'"
   notify:
     - Restart docker
 
@@ -50,7 +50,7 @@
   lineinfile:
     dest: "/etc/sysconfig/docker-network"
     regexp: "^DOCKER_NETWORK_OPTIONS="
-    line: "DOCKER_NETWORK_OPTIONS='--mtu {{ host_preparation_docker_mtu }}'"
+    line: "DOCKER_NETWORK_OPTIONS='--mtu {{ openshift_node_sdn_mtu }}'"
   notify:
     - Restart docker
 
