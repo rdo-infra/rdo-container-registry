@@ -25,13 +25,19 @@ yum -y install git
 git clone https://github.com/letsencrypt/letsencrypt
 mkdir -p /tmp/letsencrypt
 
-for domain in registry.rdoproject.org trunk.registry.rdoproject.org console.registry.rdoproject.org
+for domain in registry.rdoproject.org trunk.registry.rdoproject.org console.registry.rdoproject.org registry.distributed-ci.io
 do
+
+if [[ domain =~ "distributed-ci.io" ]]; then
+    email="distributed-ci@redhat.com"
+else
+    email="dmsimard@redhat.com"
+fi
 letsencrypt/letsencrypt-auto --renew-by-default \
   -a standalone \
   --webroot-path /tmp/letsencrypt/ \
   --server https://acme-v01.api.letsencrypt.org/directory \
-  --email dmsimard@redhat.com \
+  --email ${email} \
   --text \
   --non-interactive \
   --agree-tos \
