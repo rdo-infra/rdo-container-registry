@@ -25,7 +25,7 @@ yum -y install git
 git clone https://github.com/letsencrypt/letsencrypt
 mkdir -p /tmp/letsencrypt
 
-for domain in registry.rdoproject.org trunk.registry.rdoproject.org console.registry.rdoproject.org
+for domain in registry.rdoproject.org trunk.registry.rdoproject.org trunk.registry.dev.rdoproject.org console.registry.rdoproject.org
 do
 letsencrypt/letsencrypt-auto --renew-by-default \
   -a standalone \
