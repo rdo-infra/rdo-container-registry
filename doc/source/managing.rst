@@ -1,51 +1,12 @@
-Managing the registry
-=====================
+How to get the service account tokens:
+======================================
 
-.. warning:: This should eventually be automated, see
-             https://github.com/rdo-infra/rdo-container-registry/issues/1
+.. note:: These operation is done directly on the master
 
-.. note:: These operations are done directly on the master
+Retrieve service account token for image pushes (for CI and things like that)::
 
-::
-
-    # Grant superuser privileges to a user (doesn't require the user to login before applying)
-    oadm policy add-cluster-role-to-user cluster-admin dmsimard
-
-    # Create projects
-    oc new-project master \
-      --description="TripleO container images for trunk and continuous integration for OpenStack 'master'" \
-      --display-name="TripleO container images for 'master'"
-
-    oc new-project pike \
-      --description="TripleO container images for trunk and continuous integration for OpenStack 'pike'" \
-      --display-name="TripleO container images for 'pike'"
-
-    # Allow authenticated users to browse the projects
-    # Note:
-    #  - https://github.com/cockpit-project/cockpit/issues/6711
-    #  - https://github.com/openshift/origin/issues/14381
-    oc policy add-role-to-group registry-viewer system:authenticated -n master
-    oc policy add-role-to-group registry-viewer system:authenticated -n pike
-
-    # Allow unauthenticated users to pull images from the projects
-    # (Anonymous, public access to registry, not the actual console)
-    oc policy add-role-to-group registry-viewer system:unauthenticated -n master
-    oc policy add-role-to-group registry-viewer system:unauthenticated -n pike
-
-    # Create service account, make it admin of the projects
-    oc create serviceaccount tripleo.service -n default
-
-    # Add permissions for the service account to push and pull images
-    oc policy add-role-to-user system:image-builder system:serviceaccount:default:tripleo.service -n master
-    oc policy add-role-to-user system:image-builder system:serviceaccount:default:tripleo.service -n pike
-
-    # Retrieve service account token for image pushes, for example when doing CI
-    oc describe serviceaccount tripleo.service -n default
-    oc describe secret tripleo.service-token-<generated> -n default
-
-    # Create a service account with exclusive rights to image pruning
-    oc create serviceaccount rdo.pruner -n default
-    oadm policy add-cluster-role-to-user system:image-pruner system:serviceaccount:default:rdo.pruner -n default
+    oc describe serviceaccount tripleo.service -n tripleo
+    oc describe secret tripleo.service-token-<generated> -n tripleo
 
 More reading
 ~~~~~~~~~~~~
