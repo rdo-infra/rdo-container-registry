@@ -1,0 +1,128 @@
+---
+#   Copyright Red Hat, Inc. All Rights Reserved.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License"); you may
+#   not use this file except in compliance with the License. You may obtain
+#   a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#   License for the specific language governing permissions and limitations
+#   under the License.
+#
+
+- name: Deply the registry projects and the associated users
+  hosts: masters
+  become: yes
+  tasks:
+    - name: Grant to David the cluster-admin privileges
+      oc_adm_policy_user:
+        user: dmsimard
+        resource_kind: cluster-role
+        resource_name: cluster-admin
+        state: present
+    - name: create the upstream tripleo project
+      oc_project:
+        state: present
+        name: tripleo
+        display_name: TripleO container images
+    - name: create tripleo serviceaccount
+      oc_serviceaccount:
+        name: tripleo.service
+        namespace: tripleo
+    - name: Grant to tripleo.service the admin privileges
+      oc_adm_policy_user:
+        user: system:serviceaccount:tripleo:tripleo.service
+        resource_kind: role
+        resource_name: admin
+        state: present
+        namespace: tripleo
+
+    - name: Allow authenticated users to browse the TripleO project
+      # Note: https://github.com/cockpit-project/cockpit/issues/6711
+      oc_adm_policy_group:
+        group: system:authenticated
+        resource_kind: role
+        resource_name: registry-viewer
+        state: present
+        namespace: tripleo
+
+    - name: Allow unauthenticated users to browse the TripleO project
+      oc_adm_policy_group:
+        group: system:unauthenticated
+        resource_kind: role
+        resource_name: registry-viewer
+        state: present
+        namespace: tripleo
+
+    - name: create the rhosp12 project
+      oc_project:
+        state: present
+        name: rhosp12
+        display_name: Red Hat OSP12 images
+
+    - name: Configure the reencrypt route
+      oc_route:
+        name: docker-registry-dci
+        namespace: default
+        service_name: docker-registry
+        tls_termination: "reencrypt"
+        host: "registry.distributed-ci.io"
+        cert_path: "/etc/letsencrypt/live/registry.distributed-ci.io/registry.distributed-ci.io-cert.pem"
+        key_path: "/etc/letsencrypt/live/registry.distributed-ci.io/registry.distributed-ci.io-privkey.pem"
+        cacert_path: "/etc/letsencrypt/live/registry.distributed-ci.io/registry.distributed-ci.io-chain.pem"
+        dest_cacert_path: "/etc/origin/master/ca.crt"
+
+
+    - oc_secret:
+        state: absent
+        namespace: rhosp12
+        name: rhosp12-dci-user-secret
+
+    - name: create secret to test with - Arrange
+      oc_secret:
+        namespace: rhosp12
+        name: rhosp12-dci-user-secret
+        contents:
+        - path: config.yml
+          data: "value: True\n"
+        - path: passwords.yml
+          data: "test1\ntest2\ntest3\ntest4\ntest5\n"
+        - path: token
+          data: "bob"
+
+    - name: Delete DCI user account
+      oc_serviceaccount:
+        state: absent
+        name: dci-registry-user.service
+        namespace: rhosp12
+
+    - name: Create DCI user account
+      oc_serviceaccount:
+        state: present
+        name: dci-registry-user.service
+        namespace: rhosp12
+        secrets:
+          - rhosp12-dci-user-secret
+
+    - name: Grant to DCI user the ability to read the registry
+      oc_adm_policy_user:
+        user: system:serviceaccount:rhosp12:dci-registry-user.service
+        resource_kind: role
+        resource_name: registry-viewer
+        state: present
+        namespace: rhosp12
+
+
+    - name: get secrets of DCI user
+      oc_serviceaccount_secret:
+        state: list
+        service_account: dci-registry-user.service
+        namespace: rhosp12
+      register: dcisecrets
+
+    - debug:
+        var: dcisecrets
