@@ -19,15 +19,15 @@ The following patches were submitted and merged upstream in order to make this w
 - Allow a hostname to resolve to 127.0.0.1 during validation:
   https://github.com/openshift/openshift-ansible/commit/9260dcd084f19ec5a641c2673525163d5ab76816
 
+- Support enabling the centos-openshift-origin-testing repository:
+  https://github.com/openshift/openshift-ansible/commit/ac8f77887acae94a789f4b8fdc1f3f18a4446024
+
+- Refactor openshift_hosted's docker-registry route setup:
+  https://github.com/openshift/openshift-ansible/commit/00afac6ef3235ab66e0a0c02cc863cb577e127f2
+
 Work is still in progress to merge the some patches. While these are pending,
 they are rebased and cherry-picked together a forked branch at
 https://github.com/dmsimard/openshift-ansible/tree/rdo
 
-- Support enabling the centos-openshift-origin-testing repository:
-  https://github.com/openshift/openshift-ansible/pull/4307
-
 - Refactor registry-console setup and add support for SSL:
   https://github.com/openshift/openshift-ansible/pull/4256
-
-- Refactor openshift_hosted's docker-registry route setup:
-  https://github.com/openshift/openshift-ansible/pull/4254
