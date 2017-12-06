@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7be1f8_88b00cf6",
+        "filename": "README.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:26:04Z",
+      "side": 1,
+      "message": "Thanks!\n\nThere\u0027s this patch too, actually: https://github.com/openshift/openshift-ansible/pull/6022",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 32
+      },
+      "revId": "87ee0436f93509efa6e516fb7aeb66baa4e4ac65",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
