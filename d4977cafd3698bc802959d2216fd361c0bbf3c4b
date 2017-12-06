@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7be1f8_88e2cc01",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "the host-preparation.yml playbook is run before the installation of the registry -- we need to add the additional routes and config after the registry has been installed.\n\nThis needs to be a new playbook, post-install.yml or something.",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 59
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_a8e6b014",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "let\u0027s call this docker-registry-dci",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_c8e3e403",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "let\u0027s put the real domain here, and then make sure it resolves to localhost from the perspective of the registry here: https://github.com/rdo-infra/rdo-container-registry/blob/master/roles/host-preparation/tasks/main.yml#L22\n\nWe can probably put that domain name in a variable or something.\nWe could make this generic ? i.e, a list of domains and we iterate through them, create routes and certs for them.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_e8f0a8cb",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "ditto, although we\u0027ll probably move the certificates elsewhere in the future.",
+      "range": {
+        "startLine": 31,
+        "startChar": 42,
+        "endLine": 31,
+        "endChar": 75
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_a8cdd088",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "let\u0027s call this dci.service to be consistent with our service account \"tripleo.service\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_c8ca046e",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right.\n\nWhat\u0027s the purpose for that service account ?\nRight now we currently have one service account that spans different projects.\n\nSo we have a service account in default which has the role \"system:image-builder\" on the \"master\" and \"pike\" projects.\n\nYou probably want something like:\nuser: \"system:serviceaccount:default:dci.service\"\nresource_kind: role\nresource_name: \"system:image-builder\"\nnamespace: rhosp12\n\nCareful to use \":\" without double quotes, it confuses yaml.\nAlso, cluster-roles are global permissions, we\u0027re only handing out namespaced roles.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_08c5fc5a",
+        "filename": "letsencrypt.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "You can leave this out, this script isn\u0027t actually used in the integration tests.",
+      "range": {
+        "startLine": 28,
+        "startChar": 68,
+        "endLine": 28,
+        "endChar": 101
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_48a614c3",
+        "filename": "run_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-06T22:20:26Z",
+      "side": 1,
+      "message": "As per discussed, we\u0027re going to need to add a different playbook that runs after config.yml.",
+      "range": {
+        "startLine": 31,
+        "startChar": 90,
+        "endLine": 31,
+        "endChar": 138
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
