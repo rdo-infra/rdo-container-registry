@@ -20,3 +20,37 @@
   tasks:
     - include_role:
         name: host-preparation
+
+    - name: Configure a reencrypt route for docker-registry
+      oc_route:
+        name: docker-registry-dev
+        namespace: "default"
+        service_name: docker-registry
+        tls_termination: "reencrypt"
+        host: "trunk.registry.dev.rdoproject.org"
+        cert_path: "/root/etc/letsencrypt/archive/trunk.registry.dev.rdoproject.org/cert1.pem"
+        key_path: "/root/etc/letsencrypt/archive/trunk.registry.dev.rdoproject.org/privkey1.pem"
+        cacert_path: "/root/etc/letsencrypt/archive/trunk.registry.dev.rdoproject.org/chain1.pem"
+        dest_cacert_path: "/etc/origin/master/ca.crt"
+
+    - name: create the rhosp12 project
+      oc_project:
+        state: present
+        name: rhosp12
+        display_name: Red Hat OSP12 images
+
+    - name: create the dci-feeder serviceaccount
+      oc_serviceaccount:
+        name: osp-feeder
+        namespace: default
+      register: sa_out
+
+    - debug:
+        var: sa_out
+
+    - name: associate rhosp12 to the osp-feeder serviceaccount
+      oc_adm_policy_user:
+        user: osp-feeder
+        resource_kind: cluster-role
+        resource_name: system:serviceaccount:rhosp12:rhosp12.service
+        state: present
