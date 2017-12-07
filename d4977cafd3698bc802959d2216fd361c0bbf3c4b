@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba7be1f8_a39ed154",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-07T19:01:50Z",
+      "side": 1,
+      "message": "Agreed. I will move this part.",
+      "parentUuid": "ba7be1f8_88e2cc01",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 59
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7be1f8_a8e6b014",
         "filename": "host-preparation.yml",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-06T22:20:26Z",
       "side": 1,
       "message": "let\u0027s put the real domain here, and then make sure it resolves to localhost from the perspective of the registry here: https://github.com/rdo-infra/rdo-container-registry/blob/master/roles/host-preparation/tasks/main.yml#L22\n\nWe can probably put that domain name in a variable or something.\nWe could make this generic ? i.e, a list of domains and we iterate through them, create routes and certs for them.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_c3a2e599",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-07T19:01:50Z",
+      "side": 1,
+      "message": "Agreed. It \u0027s be a nice to have but this will also be a low priority to me for the moment.",
+      "parentUuid": "ba7be1f8_c8e3e403",
       "range": {
         "startLine": 30,
         "startChar": 15,
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "ba7be1f8_e39fe94e",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-07T19:01:50Z",
+      "side": 1,
+      "message": "+2",
+      "parentUuid": "ba7be1f8_a8cdd088",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7be1f8_c8ca046e",
         "filename": "host-preparation.yml",
         "patchSetId": 3
@@ -128,6 +200,30 @@
       "writtenOn": "2017-12-06T22:20:26Z",
       "side": 1,
       "message": "This doesn\u0027t seem right.\n\nWhat\u0027s the purpose for that service account ?\nRight now we currently have one service account that spans different projects.\n\nSo we have a service account in default which has the role \"system:image-builder\" on the \"master\" and \"pike\" projects.\n\nYou probably want something like:\nuser: \"system:serviceaccount:default:dci.service\"\nresource_kind: role\nresource_name: \"system:image-builder\"\nnamespace: rhosp12\n\nCareful to use \":\" without double quotes, it confuses yaml.\nAlso, cluster-roles are global permissions, we\u0027re only handing out namespaced roles.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "d4977cafd3698bc802959d2216fd361c0bbf3c4b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7be1f8_03addd88",
+        "filename": "host-preparation.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-07T19:01:50Z",
+      "side": 1,
+      "message": "Well, I\u0027ve absolutely zero opinion on this, just a need. Something has to inject the OSP12 images in the rhosp12 project. This can either be done with a generic account like the one you mention above, or another one specific to OSP12.",
+      "parentUuid": "ba7be1f8_c8ca046e",
       "range": {
         "startLine": 53,
         "startChar": 0,
