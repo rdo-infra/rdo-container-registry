@@ -36,6 +36,11 @@ openshift_hosted_registry_persistent_volume_claims:
 # Application description: "OpenShift Docker Registry Console"
 # Application callback URL: "https://registry.rdoproject.org:8443/oauth2callback/github"
 openshift_master_identity_providers:
+  # - name: htpasswd_auth
+  #   login: true
+  #   challenge: true
+  #   kind: HTPasswdPasswordIdentityProvider
+  #   filename: /etc/openshift-passwd
   - name: github
     login: true
     challenge: false

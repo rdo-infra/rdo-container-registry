@@ -40,8 +40,8 @@ copying them into it's directories::
       popd
     done
 
-Installing OpenShift Standalone Registry
-----------------------------------------
+Installing the requirements
+---------------------------
 
 To install OpenShift Standalone Registry on ``localhost`` as root:
 
@@ -58,11 +58,6 @@ Install dependencies::
     easy_install pip
     pip install tox
 
-Export oauth application credentials for github authentication::
-
-    export RDO_GITHUB_CLIENT_ID=oauth_client_id
-    export RDO_GITHUB_CLIENT_SECRET=oauth_client_secret
-
 .. note:: /var/lib/docker will be set up on a separate block device with
           docker-storage-setup. If you do not provide the
           ``host_preparation_docker_disk`` variable for the host-preparation
@@ -77,6 +72,27 @@ Export oauth application credentials for github authentication::
 .. note:: ansible_ssh_user **MUST** be provided for the openshift-ansible
           playbook, it is required by tasks such as
           ``openshift_master_certificates : Lookup default group for ansible_ssh_user``.
+
+
+Authentification
+----------------
+
+If you deploy a development environment, you won't be able to use the GitHub
+authentication. As an alternative, you can edit the openshift_master_identity_providers
+section and uncomment the htpasswd authentication. You can generate the htpasswd file with
+the following command::
+
+    # yum install -y httpd-tools
+    # htpasswd -B -c /etc/openshift-passwd admin
+
+For a production environment, you just have to export the oauth application
+credentials for github authentication::
+
+    export RDO_GITHUB_CLIENT_ID=oauth_client_id
+    export RDO_GITHUB_CLIENT_SECRET=oauth_client_secret
+
+Installing OpenShift Standalone Registry
+----------------------------------------
 
 Retrieve and run rdo-container-registry and openshift-ansible playbooks::
 
