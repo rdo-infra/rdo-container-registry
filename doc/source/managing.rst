@@ -1,7 +1,7 @@
 Managing the registry
 =====================
 
-.. warning:: This should eventually be automated, see
+.. warning:: A lot of this should eventually be automated, see
              https://github.com/rdo-infra/rdo-container-registry/issues/1
 
 .. note:: These operations are done directly on the master
@@ -43,9 +43,48 @@ Managing the registry
     oc describe serviceaccount tripleo.service -n default
     oc describe secret tripleo.service-token-<generated> -n default
 
+    # Login as rdo.pruner service account
+    source /root/login.pruner.sh
+    # Login as system.admin account
+    source /root/login.admin.sh
+
+Pruning images
+~~~~~~~~~~~~~~
+
+To understand what image pruning does, you first need to understand that there
+are different components:
+
+- **Images** are references to image **layers** (or blobs). **Never** delete those directly!
+  - Example: *sha256:0001ce35a7c10c526a138c2fe9c8e6522e4aefd7d89c1d639fe3fe5b6f1e3631*
+- **ImageStreams** are a set of images, or layers, which is typically referred to as a Docker container image
+  - Example: *alpine*
+- **ImageStreamTags** are tags given to ImageStream to easily identify them
+  - Example: *latest*
+
+When pruning ``images``, what you are doing is deleting ``images`` (layers)
+that are no longer referenced by any ``ImageStreams`` or ``ImageStreamTags``.
+
+Pruning by itself doesn't accomplish anything if there isn't any orphaned
+images so, in order to be effective, either the operator or the tenant needs
+to regularly delete ``ImageStreams`` or ``ImageStreamTags`` that are no longer
+required.
+
+Do not ever delete ``images`` directly. This will delete the reference to the
+layer in OpenShift's etcd instance without deleting the actual blob in the
+registry storage. Images should only be deleted by the ``oc prune images``
+command.
+
+The process for pruning images currently looks like this:
+
+- Retrieve a list of ImageStreamTags that are older than **N** days and filter
+  that list through a whitelist of excluded tags (i.e, "latest", "tested", etc)
+- Delete the matched tags
+- Run the oc prune images command
+
 More reading
 ~~~~~~~~~~~~
 
 - https://docs.openshift.com/container-platform/latest/admin_guide/manage_authorization_policy.html
 - https://docs.openshift.com/container-platform/latest/dev_guide/projects.html
 - https://docs.openshift.com/container-platform/latest/admin_guide/service_accounts.html
+- https://docs.openshift.com/container-platform/latest/admin_guide/pruning_resources.html#pruning-images
