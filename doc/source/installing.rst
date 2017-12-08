@@ -15,30 +15,11 @@ copying them into it's directories::
 
     # Retrieve letsencrypt and run it
     git clone https://github.com/letsencrypt/letsencrypt
-    mkdir -p /tmp/letsencrypt
 
-    for domain in registry.rdoproject.org trunk.registry.rdoproject.org console.registry.rdoproject.org
-    do
-    letsencrypt/letsencrypt-auto --renew-by-default \
-      -a standalone \
-      --webroot-path /tmp/letsencrypt/ \
-      --server https://acme-v01.api.letsencrypt.org/directory \
-      --email dmsimard@redhat.com \
-      --text \
-      --non-interactive \
-      --agree-tos \
-      -d $domain auth
-      sleep 1
+Now you can either:
 
-      # openshift-ansible gathers all keys and certs to /etc/origin/master/named_certificates
-      # Give them unique names so they don't overwrite each other.
-      pushd /etc/letsencrypt/live/${domain}
-      ln -s privkey.pem ${domain}-privkey.pem
-      ln -s cert.pem ${domain}-cert.pem
-      ln -s chain.pem ${domain}-chain.pem
-      ln -s fullchain.pem ${domain}-fullchain.pem
-      popd
-    done
+- production: generate the SSL certificates with `./letsencrypt.sh`
+- development: generate a CA and some dummy certificates with `./mock-certs.sh`
 
 Installing OpenShift Standalone Registry
 ----------------------------------------
