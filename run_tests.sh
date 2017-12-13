@@ -10,6 +10,9 @@ function cleanup() {
     rm -rf openshift-ansible
 }
 
+# Generate the local SSL certificates
+sudo ./mock-certs.sh
+
 # This runs on localhost but uses registry.rdoproject.org resources
 for host in registry.rdoproject.org console.registry.rdoproject.org trunk.registry.rdoproject.org
 do
@@ -39,3 +42,6 @@ tox -e ansible-playbook -- -b -i hosts openshift-ansible/playbooks/byo/config.ym
 sudo oc get pods
 sudo oc get routes
 sudo oc get svc
+sudo oc get projects
+sudo oc policy who-can resource cluster-admin
+sudo oc get serviceaccounts --all-namespaces=true
