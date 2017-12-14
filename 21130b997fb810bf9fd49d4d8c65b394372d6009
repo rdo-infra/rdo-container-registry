@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a75e904_6c812f4a",
+        "filename": "doc/source/managing.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "This probably needs to be rebased on top of https://review.rdoproject.org/r/#/c/10433/ which I\u0027ll try to wrap up and land.",
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_0c9b5bca",
+        "filename": "letsencrypt.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "This isn\u0027t actually a thing, let\u0027s remove it",
+      "range": {
+        "startLine": 28,
+        "startChar": 68,
+        "endLine": 28,
+        "endChar": 101
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_2ca017f4",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "This is already done above -- also please do this with_items and add the following users:\n- dmsimard\n- jpena\n- amoralej\n\nWe should probably move this to a role eventually but that\u0027ll do for now.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_4ca55303",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "There\u0027s no tripleo project actually -- you probably picked that up from outdated docs [1]\n\n[1]: https://review.rdoproject.org/r/#/c/10433/1/doc/source/managing.rst",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_6caa0fd6",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "this should be default, not tripleo",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_8cae6be6",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "this should be with_items for \"master\" and \"pike\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_acab27d5",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "master and pike",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_ccb8632d",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "s/browse/pull images from/ (you still need to login to access the web console)",
+      "range": {
+        "startLine": 64,
+        "startChar": 43,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_ecb51f32",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "master and pike",
+      "range": {
+        "startLine": 70,
+        "startChar": 19,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_0c827b52",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "I *think* the cacert_path is required here, but I\u0027m not positive. I know that we are passing it through openshift-ansible for sure.",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 14
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_2c873763",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "Service accounts should be in the default namespace to grant them access to different namespaces (i.e, rhsop13) without it being awkward",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_4c7c7373",
+        "filename": "run_tests.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T19:08:36Z",
+      "side": 1,
+      "message": "That works for now but we need to find a better way eventually.",
+      "range": {
+        "startLine": 42,
+        "startChar": 91,
+        "endLine": 42,
+        "endChar": 139
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
