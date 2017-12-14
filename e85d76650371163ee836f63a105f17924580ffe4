@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a75e904_8c674bea",
+        "filename": "mock-certs.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T18:53:03Z",
+      "side": 1,
+      "message": "Having a bit of a hard time following what is going on here but bear in mind that I\u0027m not familiar with cfssl.\n\nThe reason why the current script [1] symlinks files to be prefixed by their domain is because they end up being copied in the same directory by openshift-ansible (/etc/origin/master/named-certificates) so the prefix is done in order to avoid being overwritten or clashing with other files.\n\nI\u0027m also not sure why (or how) cert.pem ends up being the chain, the fullchain and the cert.\nThe chain is the CA intermediate certificate, the cert is the certificate and the fullchain is a combination of the two.\n\nWe can simplify this further by only creating the files we care about -- the ones prefixed by the domain.\n\n[1]: https://github.com/rdo-infra/rdo-container-registry/blob/master/letsencrypt.sh#L42-L47",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 64
+      },
+      "revId": "e85d76650371163ee836f63a105f17924580ffe4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_6c73efb1",
+        "filename": "mock-certs.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T18:53:03Z",
+      "side": 1,
+      "message": "Files are usually 644 by default ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 70
+      },
+      "revId": "e85d76650371163ee836f63a105f17924580ffe4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
