@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "7a75e904_0ce99b1a",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-14T20:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a75e904_2ca017f4",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a75e904_4ca55303",
         "filename": "projects-creation.yml",
         "patchSetId": 9
@@ -111,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "7a75e904_2cee5723",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-14T20:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a75e904_6caa0fd6",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a75e904_8cae6be6",
         "filename": "projects-creation.yml",
         "patchSetId": 9
@@ -122,6 +170,30 @@
       "writtenOn": "2017-12-14T19:08:36Z",
       "side": 1,
       "message": "this should be with_items for \"master\" and \"pike\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_4cf3930a",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-14T20:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a75e904_8cae6be6",
       "range": {
         "startLine": 53,
         "startChar": 19,
@@ -157,6 +229,30 @@
     },
     {
       "key": {
+        "uuid": "7a75e904_6cf84fe6",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-14T20:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a75e904_acab27d5",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a75e904_ccb8632d",
         "filename": "projects-creation.yml",
         "patchSetId": 9
@@ -168,6 +264,30 @@
       "writtenOn": "2017-12-14T19:08:36Z",
       "side": 1,
       "message": "s/browse/pull images from/ (you still need to login to access the web console)",
+      "range": {
+        "startLine": 64,
+        "startChar": 43,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_8cdcab76",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-14T20:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a75e904_ccb8632d",
       "range": {
         "startLine": 64,
         "startChar": 43,
@@ -214,6 +334,30 @@
       "writtenOn": "2017-12-14T19:08:36Z",
       "side": 1,
       "message": "I *think* the cacert_path is required here, but I\u0027m not positive. I know that we are passing it through openshift-ansible for sure.",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 14
+      },
+      "revId": "21130b997fb810bf9fd49d4d8c65b394372d6009",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_cc54e3cc",
+        "filename": "projects-creation.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-14T20:11:41Z",
+      "side": 1,
+      "message": "That was my though till yesterday evening",
+      "parentUuid": "7a75e904_0c827b52",
       "range": {
         "startLine": 83,
         "startChar": 6,
