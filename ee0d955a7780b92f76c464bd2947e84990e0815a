@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a75e904_cc6143d5",
+        "filename": "run_tests.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2017-12-14T18:55:38Z",
+      "side": 1,
+      "message": "I think this might clash with the current job configuration which deploys the certs [1], when we\u0027ve merged the patch to mock the certs, we should maybe remove that from the job and then re-check this to see if it really works.\n\n[1]: https://github.com/rdo-infra/review.rdoproject.org-config/blob/master/jobs/rdoinfra.yaml#L389",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "ee0d955a7780b92f76c464bd2947e84990e0815a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
