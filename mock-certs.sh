@@ -21,21 +21,20 @@ if [ ! -e /etc/pki/ca-trust/source/anchors/mocked.pem ]; then
     update-ca-trust extract
 fi
 
+rm -rf /etc/letsencrypt/live
 for domain in ${domains}; do
     mkdir -p /etc/letsencrypt/live/${domain}
-    if [ ! -e /etc/letsencrypt/live/${domain}/${domain}-privkey.pem ]; then
-        ./cfssl gencert \
-                -ca /etc/pki/ca-trust/source/anchors/mocked.pem \
-                -ca-key /etc/pki/ca-trust/source/anchors/mocked-key.pem \
-                -hostname=${domain} ca-config.json| ./cfssljson -bare /etc/letsencrypt/live/${domain}/cert
-        cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/chain.pem
-        cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/fullchain.pem
-        cp /etc/letsencrypt/live/${domain}/cert-key.pem /etc/letsencrypt/live/${domain}/privkey.pem
-        cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/${domain}-cert.pem
-        cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/${domain}-chain.pem
-        cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/${domain}-fullchain.pem
-        cp /etc/letsencrypt/live/${domain}/cert-key.pem /etc/letsencrypt/live/${domain}/${domain}-privkey.pem
-        openssl verify /etc/letsencrypt/live/${domain}/chain.pem
-    fi
+    ./cfssl gencert \
+            -ca /etc/pki/ca-trust/source/anchors/mocked.pem \
+            -ca-key /etc/pki/ca-trust/source/anchors/mocked-key.pem \
+            -hostname=${domain} ca-config.json| ./cfssljson -bare /etc/letsencrypt/live/${domain}/cert
+    cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/chain.pem
+    cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/fullchain.pem
+    cp /etc/letsencrypt/live/${domain}/cert-key.pem /etc/letsencrypt/live/${domain}/privkey.pem
+    cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/${domain}-cert.pem
+    cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/${domain}-chain.pem
+    cp /etc/letsencrypt/live/${domain}/cert.pem /etc/letsencrypt/live/${domain}/${domain}-fullchain.pem
+    cp /etc/letsencrypt/live/${domain}/cert-key.pem /etc/letsencrypt/live/${domain}/${domain}-privkey.pem
+    openssl verify /etc/letsencrypt/live/${domain}/chain.pem
     find /etc/letsencrypt/live/${domain} -type f -exec chmod 644 {} \;
 done
