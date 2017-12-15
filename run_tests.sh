@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eux
 
 export RDO_GITHUB_CLIENT_ID=oauth_client_id
 export RDO_GITHUB_CLIENT_SECRET=oauth_client_secret
@@ -8,6 +8,23 @@ function cleanup() {
     # This is used so that openshift-ansible is not in CWD when initializing
     # tox which makes it take forever to bootstrap the virtualenv
     rm -rf openshift-ansible
+}
+
+function get_user_token() {
+    local user=$1
+
+    secret_name=$(oc describe sa ${user}|awk '/Tokens:/ {print $2}')
+    secret_value=$(oc describe secret ${secret_name}|awk '/token:/ {print $2}')
+
+    echo ${secret_value}
+}
+
+function teardown() {
+    sudo docker pull fedora
+    sudo docker tag docker.io/fedora trunk.registry.rdoproject.org/master/fedora
+    sudo docker tag docker.io/fedora registry.distributed-ci.io/rhosp12/fedora
+    sudo docker logout trunk.registry.rdoproject.org
+    sudo docker logout registry.distributed-ci.io
 }
 
 # Generate the local SSL certificates
@@ -47,3 +64,42 @@ sudo oc get svc
 sudo oc get projects
 sudo oc policy who-can resource cluster-admin
 sudo oc get serviceaccounts --all-namespaces=true
+
+teardown
+echo "Try to push an image in master without being auth"
+sudo docker push trunk.registry.rdoproject.org/master/fedora 2>&1|grep 'unauthorized: authentication required'
+
+teardown
+echo "Try to push an image in master with the proper auth"
+sudo docker login -u tripleo.service -p $(get_user_token tripleo.service) trunk.registry.rdoproject.org
+sudo docker push trunk.registry.rdoproject.org/master/fedora
+
+teardown
+echo "Try to pull the freshly uploaded image"
+sudo docker rmi trunk.registry.rdoproject.org/master/fedora
+
+teardown
+echo "Try to push to OSP/DCI without being auth"
+sudo docker push registry.distributed-ci.io/rhosp12/fedora 2>&1|grep 'unauthorized: authentication required'
+
+teardown
+echo "Try to push from OSP/DCI with the read-only account"
+sudo docker login -u dci-registry-user-osp12.service -p $(get_user_token dci-registry-user-osp12.service) registry.distributed-ci.io
+sudo docker push registry.distributed-ci.io/rhosp12/fedora 2>&1|grep 'unauthorized: authentication required'
+
+teardown
+echo "Try to push to OSP/DCI with the proper auth"
+sudo docker login -u dci-registry-admin.service -p $(get_user_token dci-registry-admin.service) registry.distributed-ci.io
+sudo docker push registry.distributed-ci.io/rhosp12/fedora
+
+teardown
+echo "Try to pull from OSP/DCI with the read-only account"
+sudo docker rmi registry.distributed-ci.io/rhosp12/fedora
+sudo docker login -u dci-registry-user-osp12.service -p $(get_user_token dci-registry-user-osp12.service) registry.distributed-ci.io
+sudo docker pull registry.distributed-ci.io/rhosp12/fedora
+
+teardown
+echo "Try to pull from OSP/DCI without being auth"
+sudo docker pull registry.distributed-ci.io/rhosp12/fedora 2>&1|grep 'unauthorized: authentication required'
+
+echo "**** LOOKS GREAT!!! ****"
