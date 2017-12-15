@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a75e904_ec451fb4",
+        "filename": "doc/source/managing.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-15T18:07:28Z",
+      "side": 1,
+      "message": "\"oc prune images\" is not a thing, you probably mean \"oadm prune images\"",
+      "revId": "9b8eaf03c4ecaaabd8d42cbf83837d206bc5c4bb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_0c127bb4",
+        "filename": "doc/source/managing.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2017-12-15T18:07:28Z",
+      "side": 1,
+      "message": "The same",
+      "revId": "9b8eaf03c4ecaaabd8d42cbf83837d206bc5c4bb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
