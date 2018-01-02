@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a6ced46_12d0d252",
+        "filename": "mock-certs.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2018-01-02T17:00:37Z",
+      "side": 1,
+      "message": "\u003e I\u0027m also not sure why (or how) cert.pem ends up being the\n\u003e chain, the fullchain and the cert. The chain is the CA\n\u003e intermediate certificate, the cert is the certificate and\n\u003e the fullchain is a combination of the two.\n\nThose parameters are mandatory, since there is no intermediate\ncertificate, I reuse the cert.pem.\n\nIf I don\u0027t do create these file, we will have a delta between a\ndeployment based on Let\u0027s Encrypt and one that on cfssl.",
+      "parentUuid": "7a75e904_8c674bea",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 64
+      },
+      "revId": "e85d76650371163ee836f63a105f17924580ffe4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a75e904_6c73efb1",
         "filename": "mock-certs.sh",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T18:53:03Z",
       "side": 1,
       "message": "Files are usually 644 by default ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 70
+      },
+      "revId": "e85d76650371163ee836f63a105f17924580ffe4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a6ced46_f2e33631",
+        "filename": "mock-certs.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 216
+      },
+      "writtenOn": "2018-01-02T17:00:37Z",
+      "side": 1,
+      "message": "The file are created by the root user and I faced a problem where, because of restrictive umask, they were not readable by an OpenShift user.",
+      "parentUuid": "7a75e904_6c73efb1",
       "range": {
         "startLine": 40,
         "startChar": 4,
