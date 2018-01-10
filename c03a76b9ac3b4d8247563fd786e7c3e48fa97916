@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa963961_71096231",
+        "filename": "run_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-01-10T21:10:39Z",
+      "side": 1,
+      "message": "This needs to be done once -- pulling the image every time is not necessary. Let\u0027s leave that out of the teardown and put it at the beginning of the tests.",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "c03a76b9ac3b4d8247563fd786e7c3e48fa97916",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa963961_3103da11",
+        "filename": "run_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-01-10T21:10:39Z",
+      "side": 1,
+      "message": "Would be nice to add pike but it can come in another commit",
+      "range": {
+        "startLine": 24,
+        "startChar": 67,
+        "endLine": 24,
+        "endChar": 73
+      },
+      "revId": "c03a76b9ac3b4d8247563fd786e7c3e48fa97916",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa963961_1118d683",
+        "filename": "run_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-01-10T21:10:39Z",
+      "side": 1,
+      "message": "Please get rid of the non-ascii characters",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "c03a76b9ac3b4d8247563fd786e7c3e48fa97916",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa963961_312cfaaa",
+        "filename": "run_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-01-10T21:10:39Z",
+      "side": 1,
+      "message": "succeed",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "c03a76b9ac3b4d8247563fd786e7c3e48fa97916",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa963961_f11c5279",
+        "filename": "run_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-01-10T21:10:39Z",
+      "side": 1,
+      "message": "rmi !\u003d pull",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 14
+      },
+      "revId": "c03a76b9ac3b4d8247563fd786e7c3e48fa97916",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
