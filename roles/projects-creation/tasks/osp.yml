@@ -60,4 +60,6 @@
     tls_termination: 'reencrypt'
     host: 'registry.distributed-ci.io'
     cert_path: '/etc/letsencrypt/live/registry.distributed-ci.io/registry.distributed-ci.io-cert.pem'
+    cacert_path: '/etc/letsencrypt/live/registry.distributed-ci.io/registry.distributed-ci.io-chain.pem'
     key_path: '/etc/letsencrypt/live/registry.distributed-ci.io/registry.distributed-ci.io-privkey.pem'
+    dest_cacert_path: '/etc/origin/master/ca.crt'
