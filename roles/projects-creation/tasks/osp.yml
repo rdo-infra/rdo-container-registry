@@ -21,6 +21,13 @@
     display_name: 'Red Hat {{ item }} images'
   with_items: '{{ osp_branches }}'
 
+- name: create the ceph project
+  oc_project:
+    state: present
+    name: 'ceph'
+    display_name: 'Ceph images'
+
+
 - name: Create DCI service accounts
   oc_serviceaccount:
     state: present
@@ -37,6 +44,15 @@
     namespace: 'rh{{ item }}'
   with_items: '{{ osp_branches }}'
 
+- name: Grant to DCI users the ability to read the Ceph images
+  oc_adm_policy_user:
+    user: 'system:serviceaccount:default:dci-registry-user-{{ item }}.service'
+    resource_kind: role
+    resource_name: registry-viewer
+    state: present
+    namespace: 'ceph'
+  with_items: '{{ osp_branches }}'
+
 - name: Create DCI admin service account
   oc_serviceaccount:
     state: present
@@ -51,6 +67,14 @@
     state: present
     namespace: 'rh{{ item }}'
   with_items: '{{ osp_branches }}'
+
+- name: Grant to DCI admin service account the admin privileges for the OSP projects
+  oc_adm_policy_user:
+    user: system:serviceaccount:default:dci-registry-admin.service
+    resource_kind: role
+    resource_name: admin
+    state: present
+    namespace: 'ceph'
 
 - name: Configure the reencrypt route for DCI image registry
   oc_route:
