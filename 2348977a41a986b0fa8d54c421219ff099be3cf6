@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_fed41848",
+        "filename": "roles/projects-creation/tasks/osp.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-02-05T16:42:49Z",
+      "side": 1,
+      "message": "Can you prefix this with rhosp ? In case we need to have a ceph namespace for non-rhosp things.",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "2348977a41a986b0fa8d54c421219ff099be3cf6",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_dec954ae",
+        "filename": "roles/projects-creation/tasks/osp.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-02-05T16:42:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "2348977a41a986b0fa8d54c421219ff099be3cf6",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_bece90b2",
+        "filename": "roles/projects-creation/tasks/osp.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-02-05T16:42:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 53,
+        "startChar": 16,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "2348977a41a986b0fa8d54c421219ff099be3cf6",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_9ec4ec92",
+        "filename": "roles/projects-creation/tasks/osp.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-02-05T16:42:49Z",
+      "side": 1,
+      "message": "ceph",
+      "range": {
+        "startLine": 71,
+        "startChar": 72,
+        "endLine": 71,
+        "endChar": 75
+      },
+      "revId": "2348977a41a986b0fa8d54c421219ff099be3cf6",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
