@@ -22,6 +22,7 @@ registry_admins:
 rdo_branches:
   - master
   - pike
+  - queens
 
 osp_branches:
   - osp12
