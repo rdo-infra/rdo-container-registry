@@ -1,0 +1,6 @@
+pruner_log_directory: /var/log/openshift_tag_pruner
+pruner_extended_whitelist:
+  - current-tripleo
+  - current-tripleo-rdo
+  - current-tripleo-rdo-internal
+  - tripleo-ci-testing

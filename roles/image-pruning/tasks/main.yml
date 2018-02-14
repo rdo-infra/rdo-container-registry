@@ -1,0 +1,31 @@
+- name: Ensure python-setuptools is installed
+  package:
+    name: python-setuptools
+    state: installed
+
+- name: Ensure pip is installed
+  easy_install:
+    name: pip
+    state: installed
+
+- name: Install image tag pruner
+  copy:
+    src: openshift_tag_pruner.py
+    dest: /usr/local/bin/openshift_tag_pruner
+    mode: 0755
+
+- name: Set up prune log directory
+  file:
+    path: "{{ openshift_tag_pruner }}"
+    state: directory
+
+- name: Set up logrotate
+  template:
+    src: openshift_tag_pruner.logrotate.j2
+    dest: /etc/logrotate.d/openshift_tag_pruner
+
+- name: Set up tag whitelist generator
+  template:
+    src: tag_whitelist.sh.j2
+    dest: /usr/local/bin/tag_whitelist_generator
+    mode: 0755
