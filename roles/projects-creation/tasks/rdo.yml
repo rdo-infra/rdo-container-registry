@@ -35,19 +35,6 @@
     namespace: '{{ item }}'
   with_items: '{{ rdo_branches }}'
 
-- name: create the rdo.pruner serviceaccount
-  oc_serviceaccount:
-    name: rdo.pruner
-    namespace: default
-
-- name: Grant to rdo.pruner the system:image-pruner super power!
-  oc_adm_policy_user:
-    user: system:serviceaccount:default:rdo.pruner
-    resource_kind: cluster-role
-    resource_name: system:image-pruner
-    state: present
-    namespace: default
-
 - name: Allow authenticated users to pull images from the TripleO projects
   # Note: https://github.com/cockpit-project/cockpit/issues/6711
   oc_adm_policy_group:
@@ -66,4 +53,3 @@
     state: present
     namespace: '{{ item }}'
   with_items: '{{ rdo_branches }}'
-

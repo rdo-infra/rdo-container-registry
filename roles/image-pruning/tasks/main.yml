@@ -1,0 +1,60 @@
+- name: Ensure python dependencies are installed
+  package:
+    name:
+      - python2-setuptools
+      - python2-pyyaml
+    state: present
+
+- name: Ensure pip is installed
+  easy_install:
+    name: pip
+    state: present
+
+- name: Install image tag pruner
+  copy:
+    src: openshift_tag_pruner.py
+    dest: /usr/local/bin/openshift_tag_pruner
+    mode: 0755
+
+- name: Install tag whitelist generator
+  template:
+    src: openshift_tag_whitelist.sh.j2
+    dest: /usr/local/bin/openshift_tag_whitelist
+    mode: 0755
+
+- name: Install wrapper script
+  template:
+    src: openshift_registry_prune.sh.j2
+    dest: /usr/local/bin/openshift_registry_pruner
+    mode: 0755
+
+- name: Set up prune log directory
+  file:
+    path: "{{ pruner_log_directory }}"
+    state: directory
+
+- name: Set up logrotate
+  template:
+    src: openshift_tag_pruner.logrotate.j2
+    dest: /etc/logrotate.d/openshift_tag_pruner
+
+- name: Create the rdo.pruner serviceaccount
+  oc_serviceaccount:
+    name: rdo.pruner
+    namespace: default
+
+- name: Grant to rdo.pruner the system:image-pruner privilege
+  oc_adm_policy_user:
+    user: system:serviceaccount:default:rdo.pruner
+    resource_kind: cluster-role
+    resource_name: system:image-pruner
+    state: present
+    namespace: default
+
+- name: Set up cron to prune tags and images
+  cron:
+    name: openshift_image_pruning
+    minute: 0
+    hour: 1
+    user: root
+    job: /usr/local/bin/openshift_registry_pruner

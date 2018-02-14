@@ -15,8 +15,10 @@
 #
 
 - name: Prepare host for an OpenShift Standalone Registry installation
-  hosts: nodes
+  hosts: masters
   become: yes
   tasks:
     - include_role:
         name: host-preparation
+    - include_role:
+        name: image-pruning

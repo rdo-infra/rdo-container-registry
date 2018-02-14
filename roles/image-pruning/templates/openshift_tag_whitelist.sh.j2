@@ -1,0 +1,23 @@
+#!/bin/bash
+# Generates a comma separated value of tags to whitelist for the RDO registry.
+# We want to whitelist some tag names (ex: "current-tripleo") but also the hash
+# that they resolve to (ex: "5466f249bd36900a1dac573cdc83e7a11493aea2_0c8f7f95")
+
+# TODO: Rely on the container image metadata instead.
+
+releases="{{ pruner_dlrn_endpoints | join(' ') }}"
+names="{{ pruner_extended_whitelist | join(' ') }}"
+
+[[ ! -d /tmp/dlrnapi ]] && virtualenv /tmp/dlrnapi >/dev/null
+source /tmp/dlrnapi/bin/activate
+pip install setuptools --upgrade >/dev/null
+pip install dlrnapi_client >/dev/null
+
+(for release in $releases
+do
+  for name in $names
+  do
+     echo $name
+     dlrnapi --url https://trunk.rdoproject.org/${release} promotion-get --promote-name ${name} --limit 1 | jq -r '.[0] | (.repo_hash)'
+  done
+done) | sort | uniq |paste -sd ','

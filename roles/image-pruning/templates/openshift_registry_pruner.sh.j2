@@ -1,0 +1,15 @@
+#!/bin/bash
+# This script wraps around openshift_tag_pruner and openshift_tag_whitelist.
+
+# Tag deletion must be completed as admin
+oc login -u system:admin --config=/etc/origin/master/admin.kubeconfig
+oadm config use-context default-system:admin
+
+for release in {{ pruner_namespaces | join (' ') }}
+do
+    /usr/local/bin/openshift_tag_pruner --whitelist "$(/usr/local/bin/openshift_tag_whitelist)" $release --confirm
+done
+
+# Pruning is done with the rdo.pruner user
+oc login --token $(oc sa get-token rdo.pruner) registry.rdoproject.org:8443
+oadm prune images --keep-younger-than=24h --keep-tag-revisions=2 --confirm
