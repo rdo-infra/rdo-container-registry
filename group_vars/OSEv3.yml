@@ -13,8 +13,8 @@ openshift_node_sdn_mtu: 1400
 openshift_deployment_type: origin
 deployment_subtype: registry
 openshift_release: v3.7
-openshift_image_tag: v3.7.0-rc.0
-openshift_repos_enable_testing: true
+# openshift_image_tag: v3.7.0
+# openshift_repos_enable_testing: true
 
 # OpenShift persistent registry volume and claim on local filesystem
 openshift_hosted_registry_storage_kind: hostpath
