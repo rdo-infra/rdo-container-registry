@@ -23,6 +23,9 @@ rdo_branches:
   - master
   - pike
   - queens
+  - tripleomaster
+  - tripleopike
+  - tripleoqueens
 
 osp_branches:
   - osp12
