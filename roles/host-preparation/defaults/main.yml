@@ -22,8 +22,10 @@ host_preparation_packages:
   - iptables-services
   - bridge-utils
   - bash-completion
+  - kexec-tools
   - docker
-  - pyOpenSSL
+  - sos
+  - psacct
 
 # It is expected that the host has an additional cinder volume/disk for the
 # storage of containers and images.
