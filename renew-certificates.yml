@@ -1,0 +1,102 @@
+- name: Renew existing letsencrypt certificates
+  hosts: masters
+  become: yes
+  handlers:
+    - name: restart origin-master-api
+      service:
+        name: origin-master-api
+        state: restarted
+  tasks:
+    # TODO: Only scale down the router if one of the certificates has been
+    # updated.
+    # We need to temporarily scale down the router pod.
+    # This allows certbot to bind port 80/443
+    - name: Scale down router pod
+      oc_scale:
+        name: router
+        kind: dc
+        namespace: default
+        replicas: 0
+        state: present
+
+    - name: Pause for router to settle
+      pause:
+        seconds: 5
+
+    - name: Renew certificates
+      command: certbot renew
+
+    - name: Scale up router pod
+      oc_scale:
+        name: router
+        kind: dc
+        namespace: default
+        replicas: 1
+        state: present
+
+    - name: Pause for router to settle
+      pause:
+        seconds: 5
+
+    # NOTE: I'm not entirely positive this is necessary but it's something that
+    # openshift-ansible does so let's not break its expectations
+    - name: Copy API certificate files in named_certificates
+      copy:
+        remote_src: yes
+        src: "/etc/letsencrypt/live/{{ item }}"
+        dest: "/etc/origin/master/named_certificates/{{ item | dirname }}-{{ item | basename }}"
+        mode: 0600
+        backup: yes
+      notify:
+        - restart origin-master-api
+      with_items:
+        - registry.rdoproject.org/fullchain.pem
+        - registry.rdoproject.org/privkey.pem
+
+    - name: Copy certificate files in named_certificates
+      copy:
+        remote_src: yes
+        src: "/etc/letsencrypt/live/{{ item }}"
+        dest: "/etc/origin/master/named_certificates/{{ item | dirname }}-{{ item | basename }}"
+        mode: 0600
+        backup: yes
+      with_items:
+        - trunk.registry.rdoproject.org/cert.pem
+        - trunk.registry.rdoproject.org/chain.pem
+        - trunk.registry.rdoproject.org/privkey.pem
+
+    - name: Update the trunk.registry.rdoproject.org route
+      oc_route:
+        name: docker-registry
+        namespace: default
+        service_name: docker-registry
+        tls_termination: 'reencrypt'
+        host: 'trunk.registry.rdoproject.org'
+        cert_path: '/etc/letsencrypt/live/trunk.registry.rdoproject.org/cert.pem'
+        cacert_path: '/etc/letsencrypt/live/trunk.registry.rdoproject.org/chain.pem'
+        key_path: '/etc/letsencrypt/live/trunk.registry.rdoproject.org/privkey.pem'
+        dest_cacert_path: '/etc/origin/master/ca.crt'
+
+    - name: Update the console.registry.rdoproject.org route
+      oc_route:
+        name: registry-console
+        namespace: default
+        service_name: registry-console
+        tls_termination: 'reencrypt'
+        host: 'console.registry.rdoproject.org'
+        cert_path: '/etc/letsencrypt/live/console.registry.rdoproject.org/cert.pem'
+        cacert_path: '/etc/letsencrypt/live/console.registry.rdoproject.org/chain.pem'
+        key_path: '/etc/letsencrypt/live/console.registry.rdoproject.org/privkey.pem'
+        dest_cacert_path: '/etc/origin/master/ca.crt'
+
+    - name: Update the registry.distributed-ci.io route
+      oc_route:
+        name: docker-registry-dci
+        namespace: default
+        service_name: docker-registry
+        tls_termination: 'reencrypt'
+        host: 'registry.distributed-ci.io'
+        cert_path: '/etc/letsencrypt/live/registry.distributed-ci.io/cert.pem'
+        cacert_path: '/etc/letsencrypt/live/registry.distributed-ci.io/chain.pem'
+        key_path: '/etc/letsencrypt/live/registry.distributed-ci.io/privkey.pem'
+        dest_cacert_path: '/etc/origin/master/ca.crt'
