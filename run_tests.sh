@@ -60,6 +60,9 @@ function ko() {
     set -e
 }
 
+# Install required packages
+
+sudo yum install -y openssl
 
 # Generate the local SSL certificates
 sudo ./mock-certs.sh
