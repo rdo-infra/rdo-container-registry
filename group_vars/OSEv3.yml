@@ -13,6 +13,8 @@ openshift_node_sdn_mtu: 1400
 openshift_deployment_type: origin
 deployment_subtype: registry
 openshift_release: v3.7
+# The dash prefix is on purpose, the matching is weird, see https://github.com/openshift/openshift-ansible/issues/8191
+openshift_pkg_version: -3.7.2-1.el7.git.0.cd74924
 # openshift_image_tag: v3.7.0
 # openshift_repos_enable_testing: true
 
