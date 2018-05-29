@@ -1,7 +1,7 @@
 ---
 openshift_docker_selinux_enabled: false
 openshift_docker_insecure_registries: 172.30.0.0/16
-openshift_disable_check: memory_availability,package_version
+openshift_disable_check: memory_availability,package_version,openshift_release
 debug_level: 2
 
 # This is deployed on an OpenStack cloud which defaults eth0 mtu to 1450
