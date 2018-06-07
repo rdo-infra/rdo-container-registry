@@ -64,8 +64,9 @@
       DEVS={{ host_preparation_docker_disk }}
       VG=docker-vg
       STORAGE_DRIVER=overlay2
-      DOCKER_ROOT_VOLUME=yes
-      DOCKER_ROOT_VOLUME_SIZE=100%FREE
+      CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker
+      CONTAINER_ROOT_LV_NAME=lvol1
+      CONTAINER_ROOT_LV_SIZE=100%FREE
     dest: "/etc/sysconfig/docker-storage-setup"
   when:
     - host_preparation_docker_disk is defined
@@ -102,8 +103,9 @@
         content: |
           VG=docker-vg
           STORAGE_DRIVER=overlay2
-          DOCKER_ROOT_VOLUME=yes
-          DOCKER_ROOT_VOLUME_SIZE=100%FREE
+          CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker
+          CONTAINER_ROOT_LV_NAME=lvol1
+          CONTAINER_ROOT_LV_SIZE=100%FREE
         dest: "/etc/sysconfig/docker-storage-setup"
 
 - name: Run docker-storage-setup
