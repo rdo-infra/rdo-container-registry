@@ -34,3 +34,6 @@ https://github.com/dmsimard/openshift-ansible/tree/rdo
 
 - Add support for hostpath persistent volume definitions
   https://github.com/openshift/openshift-ansible/pull/6022
+
+
+
