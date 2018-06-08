@@ -1,0 +1,7 @@
+- project:
+    name: rdo-infra/rdo-container-registry
+    check:
+      jobs:
+        - tox-linters
+        - tox-docs
+        - legacy-rdo-registry-integration
