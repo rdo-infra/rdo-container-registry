@@ -20,3 +20,8 @@
   tasks:
     - include_role:
         name: host-preparation
+
+# https://github.com/openshift/openshift-ansible/issues/5812
+# Glean configures "NM_CONTROLLED=no" in the ifcfg-eth0 file
+- import_playbook: openshift-ansible/playbooks/openshift-node/network_manager.yml
+- import_playbook: openshift-ansible/playbooks/prerequisites.yml
