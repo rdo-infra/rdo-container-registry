@@ -30,100 +30,33 @@
     - "{{ openshift_hosted_registry_console_routehost }}"
     - "{{ ansible_fqdn }}"
 
-- name: Configure Docker insecure registry for internal OpenShift subnet
-  lineinfile:
-    dest: "/etc/sysconfig/docker"
-    regexp: "^INSECURE_REGISTRY="
-    line: "INSECURE_REGISTRY='--insecure-registry {{ openshift_docker_insecure_registries }}'"
-  notify:
-    - Restart docker
-
-- name: Remove --selinux-enabled from /etc/sysconfig/docker for overlay2
-  lineinfile:
-    dest: "/etc/sysconfig/docker"
-    regexp: "^OPTIONS="
-    line: "OPTIONS='--log-driver=journald --signature-verification=false'"
-  notify:
-    - Restart docker
-
-- name: Configure Docker MTU
-  lineinfile:
-    dest: "/etc/sysconfig/docker-network"
-    regexp: "^DOCKER_NETWORK_OPTIONS="
-    line: "DOCKER_NETWORK_OPTIONS='--mtu {{ openshift_node_sdn_mtu }}'"
-  notify:
-    - Restart docker
-
 - name: Configure mounts fact
   set_fact:
     mounts: "{{ ansible_mounts | map(attribute='mount') | join(' ') }}"
 
-- name: Configure docker-storage-setup with a block device
-  copy:
-    content: |
-      DEVS={{ host_preparation_docker_disk }}
-      VG=docker-vg
-      STORAGE_DRIVER=overlay2
-      CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker
-      CONTAINER_ROOT_LV_NAME=lvol1
-      CONTAINER_ROOT_LV_SIZE=100%FREE
-    dest: "/etc/sysconfig/docker-storage-setup"
-  when:
-    - host_preparation_docker_disk is defined
-    - "'/var/lib/docker' not in mounts"
-
 - when:
-    - host_preparation_docker_disk is not defined
+    - container_runtime_docker_storage_setup_device == '/dev/loop0'
     - "'/var/lib/docker' not in mounts"
   block:
     - name: Warn about using loopback device
       debug:
         msg: >-
-          'host_preparation_docker_disk' was not defined, a temporary loopback
-          device will be configured for test purposes. This is not recommended
-          in production.
+          'container_runtime_docker_storage_setup_device' likely defaulted to
+          /dev/loop0.
+          A temporary loopback device will be configured for test purposes.
+          This is not recommended for production usage.
 
     - name: Pause for warning
       pause:
-        seconds: 10
+        seconds: 5
 
     - name: Create file for loopback device
       command: dd if=/dev/zero of=/tmp/loopback bs=1M count=8192
 
     - name: Set up loopback device
-      command: losetup -f /tmp/loopback
-
-    - name: Create docker-vg volume group on the loopback device
-      lvg:
-        vg: "docker-vg"
-        pvs: "/dev/loop0"
-
-    - name: Configure docker-storage-setup with a loopback device
-      copy:
-        content: |
-          VG=docker-vg
-          STORAGE_DRIVER=overlay2
-          CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker
-          CONTAINER_ROOT_LV_NAME=lvol1
-          CONTAINER_ROOT_LV_SIZE=100%FREE
-        dest: "/etc/sysconfig/docker-storage-setup"
-
-- name: Run docker-storage-setup
-  command: docker-storage-setup
-  when: "'/var/lib/docker' not in mounts"
-  notify:
-    - Restart docker
-
-- name: Enable and start Docker
-  service:
-    name: "docker"
-    state: "started"
-    enabled: "yes"
+      command: losetup -f /tmp/loopback /dev/loop0
 
 - name: Ensure the persistent volume path exists
   file:
     path: "{{ openshift_hosted_registry_storage_hostpath_path | dirname }}"
     state: directory
-
-- name: Flush handlers
-  meta: flush_handlers
