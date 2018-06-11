@@ -84,11 +84,9 @@ fi
 ssh-keyscan -H registry.rdoproject.org >>~/.ssh/known_hosts
 
 cleanup
-tox -e ansible-playbook -- -b -i hosts host-preparation.yml -e "ansible_ssh_user=${USER}"
-cleanup
 # https://github.com/openshift/openshift-ansible/issues/5812
 # Glean configures "NM_CONTROLLED=no" in the ifcfg-eth0 file
-tox -e ansible-playbook -- -b -i hosts openshift-ansible/playbooks/byo/openshift-node/network_manager.yml -e "ansible_ssh_user=${USER}"
+tox -e ansible-playbook -- -b -i hosts host-preparation.yml -e "ansible_ssh_user=${USER}"
 cleanup
 tox -e ansible-playbook -- -b -i hosts openshift-ansible/playbooks/byo/config.yml -e "ansible_ssh_user=${USER}"
 cleanup
