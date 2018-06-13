@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab921fb_2099356f",
+        "filename": "roles/host-preparation/tasks/main.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2018-06-13T11:45:48Z",
+      "side": 1,
+      "message": "With this patchset, the only way to get a non-loopback device would be to manually change container_runtime_docker_storage_setup_device in group_vars/OSEv3.yml, or am I missing something?",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "af60ab42bfe432342d0393393cdaf10a76b3cbaa",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
