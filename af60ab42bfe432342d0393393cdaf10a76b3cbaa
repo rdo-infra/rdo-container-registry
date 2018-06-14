@@ -46,6 +46,30 @@
       "revId": "af60ab42bfe432342d0393393cdaf10a76b3cbaa",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab921fb_1b0c6293",
+        "filename": "roles/host-preparation/tasks/main.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2018-06-14T15:06:12Z",
+      "side": 1,
+      "message": "I\u0027m +1 to keeping it simple, and having /dev/loop0 the default.\n\nTo make it easier for the future generations, I\u0027d like to see it documented somewhere in the README, otherwise it might be hard for someone unfamiliar with the role.",
+      "parentUuid": "bab921fb_1bfea26b",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "af60ab42bfe432342d0393393cdaf10a76b3cbaa",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
