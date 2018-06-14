@@ -22,6 +22,30 @@
       "revId": "af60ab42bfe432342d0393393cdaf10a76b3cbaa",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab921fb_1bfea26b",
+        "filename": "roles/host-preparation/tasks/main.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2018-06-14T14:48:00Z",
+      "side": 1,
+      "message": "Right, I defaulted it to /dev/loop0 for the sake of simple CI for the time being -- this would typically be /dev/vdb.\n\nI don\u0027t know whether we should keep the /dev/loop0 default or not (which makes for simple deployment, you just execute run_tests.sh and you\u0027re good to go) and then in our actual playbooks we pass the right device somehow.\n\nWe used to have to do the disk preparation ourselves but this is now something that openshift-ansible handles itself with a new role hence why we\u0027re taking all of this out.",
+      "parentUuid": "bab921fb_2099356f",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "af60ab42bfe432342d0393393cdaf10a76b3cbaa",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
